@@ -1,0 +1,15 @@
+- hosts: localhost
+  connection: local
+
+  tasks:
+  - name: Destroy servers in GCE
+    gce:
+      service_account_email: 266054065428-compute@developer.gserviceaccount.com
+      credentials_file: roles/Terraformation/Gce/files/academic-genius-245701-2ed2f87b103d.json
+      project_id: academic-genius-245701
+      zone: "{{ item.zone }}"
+      state: absent
+      instance_names: "{{ item.instance_names }}"
+    loop:
+      - { instance_names: 'webpx01', zone: 'us-east1-b' }
+      - { instance_names: 'bdpx01', zone: 'us-central1-c' }

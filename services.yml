@@ -1,0 +1,20 @@
+- name: Starting orquestrationing of Application
+  gather_facts: yes
+  hosts: webservers
+  connection: ssh
+  become: yes
+  roles:
+    - roles/Services/Nfs
+    - roles/Services/Php
+    - roles/Services/Apache
+    - roles/Services/Wordpress
+
+- name: Starting orquestrationing of Database
+  gather_facts: yes
+  hosts: dbserver
+  connection: ssh
+  become: yes
+  roles:
+    - roles/System/Selinux
+    - roles/Services/Nfs
+    - roles/Services/Mariadb

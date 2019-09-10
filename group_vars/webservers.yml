@@ -1,0 +1,7 @@
+selinux_policy: "targeted"
+selinux_state: "disabled"
+name_connection: 10.193.62.186:/teste/app
+wordpress_database: wordpress_db
+wordpress_user: wordpress_usr
+wordpress_password: ywIapecJalg6
+wordpress_database_host: 34.70.6.227

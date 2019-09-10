@@ -1,0 +1,15 @@
+plugin: gcp_compute
+projects:
+  - academic-genius-245701
+regions:
+  - "us-east1-b"
+  - "us-central1-a"
+  - "us-central1-c"
+filters: []
+keyed_groups:
+  - key: zone
+groups:
+  webservers: "'webpx' in name"
+  dbserver: "'bdpx' in name"
+auth_kind: serviceaccount
+service_account_file: inventory/academic-genius-245701-2ed2f87b103d.json

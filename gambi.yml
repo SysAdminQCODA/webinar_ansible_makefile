@@ -1,0 +1,25 @@
+- name: Change ips
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Capturing new ip database
+    shell: "ansible-inventory -i inventory/gcp.yml --yaml --host=dbserver | grep -i natIP | awk {''' print $2 '''}"
+    register: new_ip
+    until: new_ip is succeeded
+    retries: 10
+    delay: 15
+    failed_when: new_ip is failure
+
+  - name: Capturing old ip database
+    shell: "cat group_vars/webservers.yml | grep -i wordpress_database_host | awk {''' print $2 '''}"
+    register: old_ip
+    until: old_ip is succeeded
+    retries: 10
+    delay: 15
+    failed_when: old_ip is failure
+
+  - name: "Replace now Old: {{ old_ip.stdout }} - New: {{ new_ip.stdout }}"
+    replace:
+      path: group_vars/webservers.yml
+      regexp: "{{ old_ip.stdout }}"
+      replace: "{{ new_ip.stdout }}"

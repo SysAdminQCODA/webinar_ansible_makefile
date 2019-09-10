@@ -1,0 +1,59 @@
+- name: install packages nfs common
+  yum:
+    name: nfs-utils
+    state: present
+  register: install_nfs
+  until: install_nfs is succeeded
+  retries: 10
+  delay: 15
+  failed_when: install_nfs is failure
+
+- name: Verifying directory /var/www
+  stat:
+    path: /var/www
+  when: ansible_hostname == "webpx01"
+  register: stat_var_www
+
+- name: Create directory /var/www
+  file:
+    path: /var/www
+    state: directory
+    mode: 0775
+    owner: root
+    group: root
+  when: ansible_hostname == "webpx01" and stat_var_www.stat.exists == false
+  register: create_var_www
+
+- name: Mount Nfs /var/www
+  mount:
+    path: /var/www
+    src: "{{ name_connection }}"
+    fstype: nfs
+    opts: rw,auto
+    state: mounted
+  when: ansible_hostname == "webpx01" and create_var_www.changed == true
+
+- name: Verifying directory /var/lib/mysql
+  stat:
+    path: /var/lib/mysql/
+  when: ansible_hostname == "bdpx01"
+  register: stat_var_mysql
+
+- name: Create directory /var/lib/mysql
+  file:
+    path: /var/lib/mysql
+    state: directory
+    mode: 0744
+    owner: root
+    group: root
+  when: ansible_hostname == "bdpx01" and stat_var_mysql.stat.exists == false
+  register: create_var_mysql
+
+- name: Mount Nfs /var/lib/mysql
+  mount:
+    path: /var/lib/mysql
+    src: "{{ name_connection }}"
+    fstype: nfs
+    opts: rw,auto
+    state: mounted
+  when: ansible_hostname == "bdpx01" and create_var_mysql.changed == true

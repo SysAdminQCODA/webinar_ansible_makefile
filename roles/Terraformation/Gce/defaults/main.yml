@@ -1,0 +1,8 @@
+---
+instance_names: teste
+machine_type: n1-standard-1
+image: ubuntu-1604-xenial
+service_account_email: 123456789-accontoun@developer.gserviceaccount.com
+credentials_file: academic-genius-245701-2ed2f87b103d.json
+project_id:  academic-procject-1234678
+zone: us-central1-c

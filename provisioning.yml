@@ -1,0 +1,11 @@
+- name: Starting infrastructure provisioning
+  hosts: localhost
+  connection: local
+  vars:
+    service_account_email: 266054065428-compute@developer.gserviceaccount.com
+    credentials_file: roles/Terraformation/Gce/files/academic-genius-245701-2ed2f87b103d.json
+    machine_type: n1-standard-1
+    image: centos-7
+    project_id: academic-genius-245701
+  roles:
+    - roles/Terraformation/Gce

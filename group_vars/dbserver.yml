@@ -1,0 +1,12 @@
+selinux_policy: "targeted"
+selinux_state: "disabled"
+name_connection: 10.193.62.186:/teste/bd
+mariadb_bind_address: '0.0.0.0'
+mariadb_root_password: '&othErEek97FrewlAyd?'
+mariadb_databases:
+  - name: wordpress_db
+mariadb_users:
+  - name: wordpress_usr
+    password: ywIapecJalg6
+    priv: 'wordpress_db.*:ALL'
+    host: '%'

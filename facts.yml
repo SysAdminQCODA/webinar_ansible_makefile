@@ -1,0 +1,14 @@
+- hosts: localhost
+  connection: local
+
+  tasks:
+  - name: instance facts
+    gcp_compute_instance_facts:
+      zone: "{{ item.zone }}"
+      project: academic-genius-245701
+      scopes: "https://www.googleapis.com/auth/compute"
+      auth_kind: serviceaccount
+      service_account_file: roles/Terraformation/Gce/files/academic-genius-245701-2ed2f87b103d.json
+    loop:
+      - { zone: 'us-east1-b' }
+      - { zone: 'us-central1-c' }
